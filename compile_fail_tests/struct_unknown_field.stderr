@@ -1,13 +1,13 @@
 error[E0026]: struct `Wrap` does not have a field named `unknown`
-  --> compile_fail_tests/struct_unknown_field.rs:10:45
-   |
-10 |     const_destructure!(let Wrap { value: _, unknown: _ } = Wrap { value: NoCopy });
-   |                                             ^^^^^^^ struct `Wrap` does not have this field
+ --> compile_fail_tests/struct_unknown_field.rs:9:46
+  |
+9 |         const_destructure!(let Wrap { value, unknown: _ } = self);
+  |                                              ^^^^^^^ struct `Wrap` does not have this field
 
-error[E0609]: no field `unknown` on type `&Wrap<NoCopy>`
-  --> compile_fail_tests/struct_unknown_field.rs:10:45
-   |
-10 |     const_destructure!(let Wrap { value: _, unknown: _ } = Wrap { value: NoCopy });
-   |                                             ^^^^^^^ unknown field
-   |
-   = note: available field is: `value`
+error[E0609]: no field `unknown` on type `&Wrap<T>`
+ --> compile_fail_tests/struct_unknown_field.rs:9:46
+  |
+9 |         const_destructure!(let Wrap { value, unknown: _ } = self);
+  |                                              ^^^^^^^ unknown field
+  |
+  = note: available field is: `value`

@@ -19,11 +19,13 @@ macro_rules! const_destructure {
         => let $S:path { $($field:ident: $var:pat_param),* } = $value:expr
     ) => {
         let value = $value;
-        let __destructures_all_fields_and_fields_are_unique = || {
-            let $S { $($field: _),* } = &value;
-        };
         let value = ::core::mem::ManuallyDrop::new(value);
         let value = $crate::__manually_drop_inner_ref(&value);
+        let __destructures_all_fields_and_fields_are_unique = || {
+            // SAFETY: NOT SAFE BUT WE DON'T CALL THIS FUNCTION
+            #[allow(unused)]
+            let $S { $($field: $var),* } = unsafe { ::core::ptr::read(value) };
+        };
         // SAFETY: We avoid double free by 1) only reading each field once (since they're unique) and 2) the original is wrapped in ManuallyDrop.
         $(
             let $var = unsafe { ::core::ptr::addr_of!(value.$field).read() };

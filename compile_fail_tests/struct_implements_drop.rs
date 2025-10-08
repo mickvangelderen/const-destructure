@@ -4,9 +4,13 @@ struct Wrap<T> {
     value: T,
 }
 
+impl<T> Drop for Wrap<T> {
+    fn drop(&mut self) {}
+}
+
 impl<T> Wrap<T> {
     const fn test(self) -> T {
-        const_destructure!(let Wrap { value, unknown: _ } = self);
+        const_destructure!(let Wrap { value } = self);
         value
     }
 }

@@ -1,7 +1,7 @@
 error: pattern requires `..` due to inaccessible fields
-  --> compile_fail_tests/struct_unbound_field.rs:10:5
-   |
-10 |     const_destructure!(let Wrap { } = Wrap { value: NoCopy });
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   |
-   = note: this error originates in the macro `$crate::const_destructure` which comes from the expansion of the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)
+ --> compile_fail_tests/struct_unbound_field.rs:9:9
+  |
+9 |         const_destructure!(let Wrap { } = self);
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in the macro `$crate::const_destructure` which comes from the expansion of the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)

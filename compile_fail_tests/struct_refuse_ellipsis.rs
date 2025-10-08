@@ -6,7 +6,7 @@ struct Wrap<T> {
 
 impl<T> Wrap<T> {
     const fn test(self) {
-        const_destructure!(let Wrap { } = self);
+        const_destructure!(let Wrap { .. } = self);
     }
 }
 

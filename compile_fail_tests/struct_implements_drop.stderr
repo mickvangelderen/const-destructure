@@ -1,0 +1,11 @@
+error[E0509]: cannot move out of type `Wrap<T>`, which implements the `Drop` trait
+  --> compile_fail_tests/struct_implements_drop.rs:13:9
+   |
+13 |         const_destructure!(let Wrap { value } = self);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |         |
+   |         cannot move out of here
+   |         data moved here
+   |         move occurs because `value` has type `T`, which does not implement the `Copy` trait
+   |
+   = note: this error originates in the macro `$crate::const_destructure` which comes from the expansion of the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)

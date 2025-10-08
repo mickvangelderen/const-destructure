@@ -2,8 +2,10 @@ struct Wrap<T> {
     value: T,
 }
 
-const fn test<T>(wrap: Wrap<T>) -> T {
-    wrap.value
+impl<T> Wrap<T> {
+    const fn test(self) -> T {
+        self.value
+    }
 }
 
 fn main() {}
