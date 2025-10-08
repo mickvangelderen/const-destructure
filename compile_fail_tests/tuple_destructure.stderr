@@ -1,0 +1,8 @@
+error[E0493]: destructor of `(T,)` cannot be evaluated at compile-time
+ --> compile_fail_tests/tuple_destructure.rs:1:18
+  |
+1 | const fn test<T>(wrap: (T,)) -> T {
+  |                  ^^^^ the destructor for this type cannot be evaluated in constant functions
+2 |     wrap.0
+3 | }
+  | - value is dropped here

@@ -1,9 +1,11 @@
 use const_destructure::const_destructure;
 
-struct S<A> {
-    a: A,
+struct NoCopy;
+
+struct Wrap<T> {
+    value: T,
 }
 
 fn main() {
-    const_destructure!(let S { a: _, b: _ } = S { a: 1u8 });
+    const_destructure!(let Wrap { value: _, unknown: _ } = Wrap { value: NoCopy });
 }

@@ -1,0 +1,8 @@
+error[E0493]: destructor of `Wrap<T>` cannot be evaluated at compile-time
+ --> compile_fail_tests/struct_destructure.rs:5:18
+  |
+5 | const fn test<T>(wrap: Wrap<T>) -> T {
+  |                  ^^^^ the destructor for this type cannot be evaluated in constant functions
+6 |     wrap.value
+7 | }
+  | - value is dropped here
