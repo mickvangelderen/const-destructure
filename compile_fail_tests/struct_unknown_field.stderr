@@ -1,0 +1,17 @@
+error[E0026]: struct `S` does not have a field named `b`
+ --> compile_fail_tests/struct_unknown_field.rs:8:38
+  |
+8 |     const_destructure!(let S { a: _, b: _ } = S { a: 1u8 });
+  |                                      ^ struct `S` does not have this field
+
+error[E0609]: no field `b` on type `&S<u8>`
+ --> compile_fail_tests/struct_unknown_field.rs:8:38
+  |
+8 |     const_destructure!(let S { a: _, b: _ } = S { a: 1u8 });
+  |                                      ^ unknown field
+  |
+help: a field with a similar name exists
+  |
+8 -     const_destructure!(let S { a: _, b: _ } = S { a: 1u8 });
+8 +     const_destructure!(let S { a: _, a: _ } = S { a: 1u8 });
+  |

@@ -1,0 +1,7 @@
+error: tuple arity is larger than the maximum supported arity 12
+ --> compile_fail_tests/tuple_arity_unimplemented.rs:4:5
+  |
+4 |     const_destructure!(let (t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12) = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in the macro `$crate::const_destructure` which comes from the expansion of the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)

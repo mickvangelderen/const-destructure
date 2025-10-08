@@ -1,0 +1,22 @@
+error[E0308]: mismatched types
+ --> compile_fail_tests/tuple_arity_too_high.rs:4:38
+  |
+4 |     const_destructure!(let (a,b,c) = (1, 2));
+  |     ---------------------------------^^^^^^-
+  |     |                                |
+  |     |                                expected a tuple with 3 elements, found one with 2 elements
+  |     expected due to this
+  |
+  = note: expected tuple `({integer}, {integer}, _)`
+             found tuple `({integer}, {integer})`
+
+error[E0282]: type annotations needed
+ --> compile_fail_tests/tuple_arity_too_high.rs:4:5
+  |
+4 |     const_destructure!(let (a,b,c) = (1, 2));
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     |
+  |     cannot infer type
+  |     cannot call a method on a raw pointer with an unknown pointee type
+  |
+  = note: this error originates in the macro `$crate::const_destructure` which comes from the expansion of the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)

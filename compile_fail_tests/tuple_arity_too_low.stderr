@@ -1,0 +1,11 @@
+error[E0308]: mismatched types
+ --> compile_fail_tests/tuple_arity_too_low.rs:4:35
+  |
+4 |     const_destructure!(let (a,) = (1, 2));
+  |     ------------------------------^^^^^^-
+  |     |                             |
+  |     |                             expected a tuple with 1 element, found one with 2 elements
+  |     expected due to this
+  |
+  = note: expected tuple `({integer},)`
+             found tuple `({integer}, {integer})`

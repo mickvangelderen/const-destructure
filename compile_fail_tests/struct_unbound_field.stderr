@@ -1,0 +1,12 @@
+error: pattern requires `..` due to inaccessible fields
+ --> compile_fail_tests/struct_unbound_field.rs:9:5
+  |
+9 |     const_destructure!(let S { a: _ } = S { a: 1u8, b: 2i16 });
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: ignore the inaccessible and unused fields
+ --> src/lib.rs
+  |
+  |             let $S { $($field: _, ..),* } = &value;
+  |                                 ++++

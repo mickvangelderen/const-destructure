@@ -10,3 +10,6 @@ keywords = ["const", "destructuring", "struct", "tuple", "assignment"]
 categories = ["rust-patterns"]
 
 [dependencies]
+
+[dev-dependencies]
+trybuild = "1.0.111"

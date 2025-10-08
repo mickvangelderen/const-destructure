@@ -1,0 +1,10 @@
+error[E0025]: field `a` bound multiple times in the pattern
+ --> compile_fail_tests/struct_duplicate_field.rs:8:5
+  |
+8 |     const_destructure!(let S { a: a1, a: a2 } = S { a: 1u8 });
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     |
+  |     multiple uses of `a` in pattern
+  |     first use of `a`
+  |
+  = note: this error originates in the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)
