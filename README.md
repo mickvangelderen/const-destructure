@@ -1,20 +1,15 @@
 This crate provides a macro that allows you to destructure types in a `const` context:
 
 ```rust
-// A wrapper that does not implement `Copy` to enforce values are moved.
-struct NoCopy<T>(T);
-
-// Some struct we'd like to break up in a const fn.
-struct Wrap<A, B> {
-    a: A,
-    b: B,
+struct Wrap<T> {
+    value: T
 }
 
-const fn test() {
-    const_destructure!(let Wrap { a: a, b: b } = Wrap { a: NoCopy(1), b: NoCopy(2) });
-
-    assert!(matches!(a, NoCopy(1)));
-    assert!(matches!(b, NoCopy(2)));
+impl<T> Wrap<T> {
+    const fn into_inner(self) -> T {
+        const_destructure!(let Self { value } = self);
+        value
+    }
 }
 ```
 
@@ -27,12 +22,12 @@ This is still a big win over writing the implementation by hand, which requires 
 The following doesn't compile on rustc 1.90.0 (2025) due to https://github.com/rust-lang/rust/issues/86897:
 
 ```rust
-pub struct Wrap<T> {
-    value: T,
+struct Wrap<T> {
+    value: T
 }
 
-impl<T> Wrap<T> {
-    pub const fn into_inner(self) -> T {
+impl Wrap<T> {
+    const fn into_inner(self) -> T {
         let Self { value } = self;
         value
     }
@@ -41,17 +36,13 @@ impl<T> Wrap<T> {
 
 ```txt
 error[E0493]: destructor of `Wrap<T>` cannot be evaluated at compile-time
- --> test.rs:6:29
+ --> test.rs:6:25
   |
-6 |     pub const fn into_inner(self) -> T {
-  |                             ^^^^ the destructor for this type cannot be evaluated in constant functions
-7 |         self.value
-8 |     }
+6 |     const fn into_inner(self) -> T {
+  |                         ^^^^ the destructor for this type cannot be evaluated in constant functions
+...
+9 |     }
   |     - value is dropped here
-
-error: aborting due to 1 previous error
-
-For more information about this error, try `rustc --explain E0493`.
 ```
 
 You get the same error without destructuring:
@@ -62,4 +53,15 @@ impl<T> Wrap<T> {
         self.value
     }
 }
+```
+
+```txt
+error[E0493]: destructor of `Wrap<T>` cannot be evaluated at compile-time
+ --> test.rs:6:25
+  |
+6 |     const fn into_inner(self) -> T {
+  |                         ^^^^ the destructor for this type cannot be evaluated in constant functions
+7 |         self.value
+8 |     }
+  |     - value is dropped here
 ```
