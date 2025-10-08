@@ -4,4 +4,4 @@ error: pattern requires `..` due to inaccessible fields
 10 |     const_destructure!(let Wrap { } = Wrap { value: NoCopy });
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    |
-   = note: this error originates in the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)
+   = note: this error originates in the macro `$crate::const_destructure` which comes from the expansion of the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)

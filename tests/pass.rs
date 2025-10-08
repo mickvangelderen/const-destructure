@@ -13,12 +13,41 @@ macro_rules! compile_test {
     };
 }
 
+compile_test!(struct_destructure_0 {
+    struct Wrap {}
+    const_destructure!(let Wrap { } = Wrap { });
+});
+
 compile_test!(struct_destructure_1 {
     struct Wrap<T> {
         value: T,
     }
+
+    const_destructure!(let Wrap { value } = Wrap { value: NoCopy(1) });
+    assert!(matches!(value, NoCopy(1)));
+
+    const_destructure!(let Wrap { value, } = Wrap { value: NoCopy(1) });
+    assert!(matches!(value, NoCopy(1)));
+
     const_destructure!(let Wrap { value: v } = Wrap { value: NoCopy(1) });
     assert!(matches!(v, NoCopy(1)));
+
+    const_destructure!(let Wrap { value: v, } = Wrap { value: NoCopy(1) });
+    assert!(matches!(v, NoCopy(1)));
+
+    #[allow(unused_mut)]
+    {
+        const_destructure!(let Wrap { value: mut v } = Wrap { value: NoCopy(1) });
+        assert!(matches!(v, NoCopy(1)));
+        v.0 = 2
+    }
+
+    #[allow(unused_mut)]
+    {
+        const_destructure!(let Wrap { value: mut v, } = Wrap { value: NoCopy(1) });
+        assert!(matches!(v, NoCopy(1)));
+        v.0 = 2
+    }
 });
 
 compile_test!(struct_destructure_2 {
@@ -26,8 +55,17 @@ compile_test!(struct_destructure_2 {
         a: A,
         b: B,
     }
-    const_destructure!(let Wrap { a: a, b: b } = Wrap { a: NoCopy(1), b: NoCopy(2) });
+
+    const_destructure!(let Wrap { a: a_bound, b: b_bound } = Wrap { a: NoCopy(1), b: NoCopy(2) });
+    assert!(matches!(a_bound, NoCopy(1)));
+    assert!(matches!(b_bound, NoCopy(2)));
+
+    const_destructure!(let Wrap { a, b: b_bound } = Wrap { a: NoCopy(1), b: NoCopy(2) });
     assert!(matches!(a, NoCopy(1)));
+    assert!(matches!(b_bound, NoCopy(2)));
+
+    const_destructure!(let Wrap { a: a_bound, b } = Wrap { a: NoCopy(1), b: NoCopy(2) });
+    assert!(matches!(a_bound, NoCopy(1)));
     assert!(matches!(b, NoCopy(2)));
 });
 

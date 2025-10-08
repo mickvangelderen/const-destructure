@@ -7,4 +7,4 @@ error[E0025]: field `value` bound multiple times in the pattern
    |     multiple uses of `value` in pattern
    |     first use of `value`
    |
-   = note: this error originates in the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)
+   = note: this error originates in the macro `$crate::const_destructure` which comes from the expansion of the macro `const_destructure` (in Nightly builds, run with -Z macro-backtrace for more info)
