@@ -1,0 +1,12 @@
+[package]
+name = "const-destructure"
+version = "0.1.0"
+edition = "2024"
+authors = ["Mick van Gelderen"]
+description = "Destructuring in const contexts on stable Rust."
+repository = "https://github.com/mickvangelderen/const-destructure"
+license = "MIT OR Apache-2.0"
+keywords = ["const", "destructuring", "struct", "tuple", "assignment"]
+categories = ["rust-patterns"]
+
+[dependencies]
