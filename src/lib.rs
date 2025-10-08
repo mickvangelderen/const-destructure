@@ -22,7 +22,7 @@ macro_rules! const_destructure {
         let __destructures_all_fields_and_fields_are_unique = || {
             let $S { $($field: _),* } = &value;
         };
-        let value = ::core::mem::ManuallyDrop::new($value);
+        let value = ::core::mem::ManuallyDrop::new(value);
         let value = $crate::__manually_drop_inner_ref(&value);
         // SAFETY: We avoid double free by 1) only reading each field once (since they're unique) and 2) the original is wrapped in ManuallyDrop.
         $(
