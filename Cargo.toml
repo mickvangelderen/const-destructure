@@ -7,7 +7,7 @@ description = "Destructuring in const contexts on stable Rust."
 repository = "https://github.com/mickvangelderen/const-destructure"
 license = "MIT OR Apache-2.0"
 keywords = ["const", "destructuring", "struct", "tuple", "assignment"]
-categories = ["rust-patterns"]
+categories = ["rust-patterns", "no-std::no-alloc"]
 
 [dependencies]
 

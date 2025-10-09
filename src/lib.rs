@@ -1,8 +1,10 @@
+#![no_std]
+
 /// Provides access to the inner value of a ManuallyDrop<T>.
 #[doc(hidden)]
 pub const fn __manually_drop_inner_ref<T>(slot: &core::mem::ManuallyDrop<T>) -> &T {
     // SAFETY: ManuallyDrop<T> and T are guaranteed to have the same layout
-    unsafe { core::mem::transmute(slot) }
+    unsafe { ::core::mem::transmute(slot) }
 }
 
 /// Turns the type `&T` into `T` but does not provide an actual implementation. Can be used in type checks.
