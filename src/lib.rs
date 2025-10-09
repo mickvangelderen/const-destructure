@@ -1,8 +1,14 @@
-#[doc(hidden)]
 /// Provides access to the inner value of a ManuallyDrop<T>.
+#[doc(hidden)]
 pub const fn __manually_drop_inner_ref<T>(slot: &core::mem::ManuallyDrop<T>) -> &T {
     // SAFETY: ManuallyDrop<T> and T are guaranteed to have the same layout
     unsafe { core::mem::transmute(slot) }
+}
+
+/// Turns the type `&T` into `T` but does not provide an actual implementation. Can be used in type checks.
+#[doc(hidden)]
+pub const fn __unimplemented_to_owned<T>(_: &T) -> T {
+    panic!("no valid implementation exists for this function and it should not be invoked")
 }
 
 #[macro_export]
@@ -21,12 +27,11 @@ macro_rules! const_destructure {
         let value = $value;
         let value = ::core::mem::ManuallyDrop::new(value);
         let value = $crate::__manually_drop_inner_ref(&value);
-        let __destructures_all_fields_and_fields_are_unique = || {
-            // SAFETY: NOT SAFE BUT WE DON'T CALL THIS FUNCTION
+        let __assert_valid_destructure = || {
             #[allow(unused)]
-            let $S { $($field: $var),* } = unsafe { ::core::ptr::read(value) };
+            let $S { $($field: $var),* } = $crate::__unimplemented_to_owned(value);
         };
-        // SAFETY: We avoid double free by 1) only reading each field once (since they're unique) and 2) the original is wrapped in ManuallyDrop.
+        // SAFETY: We avoid double free by 1) only reading each field once (since the destructuring is valid) and 2) the original is wrapped in ManuallyDrop.
         $(
             let $var = unsafe { ::core::ptr::addr_of!(value.$field).read() };
         )*
